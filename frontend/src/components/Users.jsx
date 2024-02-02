@@ -10,11 +10,14 @@ const Users = () => {
   const [filter, setFilter] = useState("")
   
   useEffect(() => {
-       axios.get("http://localhost:8080/api/v1/users/bulk?filter=" + filter)
+       axios.get(`http://localhost:8080/api/v1/users/bulk?filter=${filter}`)
         .then(response => {
-            setUsers(response.data.user)
+          setUsers(response.data.user)
         })
-}, [filter])
+  }, [filter])
+  
+
+
     
 
   return (

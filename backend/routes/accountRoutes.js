@@ -14,6 +14,8 @@ router.get('/balance', authMiddleware, async (req, res) => {
         })
     
         res.json({
+            firstName: account.firstName,
+            lastName: account.lastName,
             balance: account.balance
         })
         
@@ -30,14 +32,15 @@ router.get('/balance', authMiddleware, async (req, res) => {
 
 router.post('/transfer', authMiddleware, async (req, res) => {
 
+    const session = await mongoose.startSession();
+    session.startTransaction();
+  
+  
+
     try {
 
         console.log('Received transfer request:', req.body);
 
-
-        const session = await mongoose.startSession();
-
-        session.startTransaction();
         const { amount, to } = req.body;
 
 
