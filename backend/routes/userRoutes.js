@@ -144,7 +144,7 @@ router.put("/update",authMiddleware, async (req, res) => {
             _id: req.userId
         },
         { $set: req.body },
-            {new:true}
+         {new:true}
         )
     
         res.status(200).json({
