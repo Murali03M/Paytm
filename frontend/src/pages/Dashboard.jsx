@@ -6,42 +6,45 @@ import axios from 'axios'
 const Dashboard = () => {
 
 
-  // const [firstName, setFirstName] = useState('');
-  // const [lastName, setLastName] = useState('');
-  // const [balance, setBalance] = useState(0);
-
+      
+     const [firstName, setFirstName] = useState('');
+     const [lastName, setLastName] = useState('');
+     const [balance, setBalance] = useState('');
 
   useEffect(() => {
-      
-    const res = axios.get("http://localhost:8080/api/v1/accounts/balance",
-             {
-              headers: {
-              Authorization: "Bearer " + localStorage.getItem("token"),
-              "Content-Type": "application/json"
-             },
-        }
-      );
-    
-    
-     console.log(res.data);
-    
-    // setFirstName(res.data.firstName)
-    // setLastName(res.data.lastName)
-    // setBalance(res.data.balance)
-     
-      
-    }, []);
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:8080/api/v1/accounts/balance",
+          {
+            headers: {
+              Authorization: "Bearer " + localStorage.getItem("token")
+            }
+          }
+        );
+
+        const accountData = response.data;
+        setFirstName(accountData.firstName);
+        setLastName(accountData.lastName);
+        setBalance(accountData.balance);
+      } catch (error) {
+        console.error('Error fetching account balance:', error);
+      }
+    };
+
+    fetchData(); 
+
+  }, []); 
 
   
 
-
   return (
     <div>
-      <Appbar  />
+      <Appbar firstName={firstName} />
     
       <div className="m-8">
-        <Balance  value={10}/>
-        <Users/>
+        <Balance  value={balance}/>
+        <Users />
       </div>
     </div>
   )
