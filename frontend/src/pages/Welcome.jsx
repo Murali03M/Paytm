@@ -4,6 +4,8 @@ import Button from '../components/Button'
 const Welcome = () => {
     const navigate = useNavigate();
 
+    
+
   return (
       <div className='flex flex-col  bg-gray-100 justify-center h-screen'>
           <div className='flex flex-col justify-center items-center px-10 py-8 rounded-md '>

@@ -1,4 +1,5 @@
 import { BrowserRouter, Route, Routes, } from "react-router-dom"
+import {RecoilRoot} from "recoil"
 import Signup from "./pages/Signup";
 import { Signin } from "./pages/Signin";
 import Dashboard from "./pages/Dashboard";
@@ -8,6 +9,7 @@ function App() {
 
   return (
     <div >
+      <RecoilRoot>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Welcome/>}></Route>
@@ -18,6 +20,9 @@ function App() {
         </Routes>
       </BrowserRouter>
     
+
+      </RecoilRoot>
+     
     </div>
   )
 }
