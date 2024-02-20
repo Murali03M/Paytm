@@ -8,6 +8,10 @@ app.use(express.json());
 
 
 
+
+
+
+
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/accounts', accountRouter)
 
