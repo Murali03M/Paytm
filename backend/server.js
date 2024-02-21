@@ -1,8 +1,10 @@
 const mongoose = require('mongoose');
 const app =require('./index')
-mongoose.connect("mongodb+srv://murali732000:DRNELJ77humGTQIU@cluster0.8pglltf.mongodb.net/Paytm");
 
-
+mongoose.connect("mongodb+srv://murali732000:DRNELJ77humGTQIU@cluster0.8pglltf.mongodb.net/Paytm", {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+});
 
 
 const port = 8080 || 3000;
