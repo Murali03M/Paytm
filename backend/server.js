@@ -6,7 +6,7 @@ const mongoURI = "mongodb+srv://murali732000:DRNELJ77humGTQIU@cluster0.8pglltf.m
 mongoose.connect(mongoURI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-
+  ssl: false,
 });
 
 // Event listeners for Mongoose connection
