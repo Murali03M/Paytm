@@ -18,7 +18,7 @@ const SendMoney = () => {
       
       console.log("Request Payload:", { to: id, amount });
       const response = await axios.post(
-        "http://localhost:8080/api/v1/accounts/transfer",
+        "https://paytm-tu3l.onrender.com/api/v1/accounts/transfer",
         {
           to: id,
           amount,

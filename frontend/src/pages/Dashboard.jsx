@@ -15,7 +15,7 @@ const Dashboard = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8080/api/v1/accounts/balance",
+          "https://paytm-tu3l.onrender.com/api/v1/accounts/balance",
           {
             headers: {
               Authorization: "Bearer " + localStorage.getItem("token")

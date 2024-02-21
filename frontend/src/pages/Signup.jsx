@@ -17,7 +17,7 @@ const Signup = () => {
 
   const submithandler = async () => {
   
-   const response = await axios.post("http://localhost:8080/api/v1/users/signup", {
+   const response = await axios.post("https://paytm-tu3l.onrender.com/api/v1/users/signup", {
       username,
       firstName,
       lastName,

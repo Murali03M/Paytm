@@ -5,36 +5,35 @@ const { Account } = require('../model/accountModel');
 const { User } = require('../model/userModel');
 const { authMiddleware } = require("../middleware/authMiddleware");
 
-
-
 router.get('/balance', authMiddleware, async (req, res) => {
-    
     try {
         const account = await Account.findOne({
-            userId:req.userId
-        })
+            userId: req.userId
+        });
 
         const user = await User.findOne({
-            _id:req.userId
-        })
-    
-        res.json({
-            
-                 firstName: user.firstName,
-                 lastName: user.lastName,
-                 balance: account.balance
-          
-        })
-        
-        
+            _id: req.userId
+        });
+
+        // Check if the account object exists before accessing its properties
+        if (account) {
+            res.json({
+                firstName: user.firstName,
+                lastName: user.lastName,
+                balance: account.balance
+            });
+        } else {
+            res.status(404).json({
+                message: 'Account not found'
+            });
+        }
     } catch (error) {
         res.status(403).json({
             message: error.message
-        })
+        });
     }
+});
 
-    
-})
 
 
 router.post('/transfer', authMiddleware, async (req, res) => {
