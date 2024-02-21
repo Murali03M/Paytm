@@ -3,7 +3,8 @@ const app =require('./index')
 
 mongoose.connect("mongodb+srv://murali732000:DRNELJ77humGTQIU@cluster0.8pglltf.mongodb.net/Paytm", {
   useNewUrlParser: true,
-  useUnifiedTopology: true
+    useUnifiedTopology: true,
+  ssl:false,
 });
 
 
