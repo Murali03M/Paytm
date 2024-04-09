@@ -17,9 +17,6 @@ const singupBody = zod.object({
 })
 
 
-
-
-
 const signinBody = zod.object({
     username: zod.string().email(),
     password: zod.string()
@@ -30,7 +27,7 @@ router.post('/signup', async (req, res) => {
 
     try {
 
-
+  console.log(req.body)
      const success = singupBody.safeParse(req.body);
      if (!success) {
          return res.status(411).json({
@@ -164,9 +161,6 @@ router.put("/update",authMiddleware, async (req, res) => {
 router.get("/bulk", async (req, res) => {
     const filter = req.query.filter || "";
 
-  
-
-       
 
     const users = await User.find({
         $or: [
