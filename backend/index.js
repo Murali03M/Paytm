@@ -6,19 +6,18 @@ const app = express();
 const mongoose = require('mongoose');
 app.use(cors());
 app.use(express.json());
+const dotenv = require('dotenv');
+dotenv.config();
 
 
-mongoose.connect("mongodb+srv://murali732000:DRNELJ77humGTQIU@cluster0.8pglltf.mongodb.net/Paytm");
-
-
-const port = 8080 || 3000;
-
+mongoose.connect(process.env.DATABASE_URL);
 
 
 
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/accounts', accountRouter)
 
+const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
     console.log(`Port is running ${port}`);
