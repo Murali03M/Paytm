@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useSearchParams,useNavigate } from 'react-router-dom';
+import { BACKEND_URL } from '../config';
 
 const SendMoney = () => {
 
@@ -18,7 +19,7 @@ const SendMoney = () => {
       
       console.log("Request Payload:", { to: id, amount });
       const response = await axios.post(
-        "https://paytm-tu3l.onrender.com/api/v1/accounts/transfer",
+      `${BACKEND_URL}/api/v1/accounts/transfer`,
         {
           to: id,
           amount,

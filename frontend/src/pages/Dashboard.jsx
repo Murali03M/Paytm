@@ -3,6 +3,7 @@ import Appbar from '../components/Appbar'
 import Balance from '../components/Balance'
 import Users from '../components/Users'
 import axios from 'axios'
+import { BACKEND_URL } from '../config'
 const Dashboard = () => {
 
 
@@ -13,9 +14,10 @@ const Dashboard = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      
       try {
         const response = await axios.get(
-          "https://paytm-tu3l.onrender.com/api/v1/accounts/balance",
+          `${BACKEND_URL}/api/v1/accounts/balance`,
           {
             headers: {
               Authorization: "Bearer " + localStorage.getItem("token")

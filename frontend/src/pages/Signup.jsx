@@ -1,4 +1,6 @@
-import React,{useState} from 'react'
+import React, { useState } from 'react'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Heading from '../components/Heading'
 import SubHeading from '../components/SubHeading'
 import InputBox from '../components/InputBox'
@@ -6,7 +8,7 @@ import Button from '../components/Button'
 import BottomWarning from '../components/BottomWarning'
 import axios from 'axios'
 import { useNavigate } from "react-router-dom"
-
+import { BACKEND_URL } from '../config';
 const Signup = () => {
 
   const [firstName, setFirstName] = useState('')
@@ -15,9 +17,37 @@ const Signup = () => {
   const [username, setUsername] = useState('')
   const navigate = useNavigate();
 
+
+  const validateEmail = (email) => {
+    const pattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return pattern.test(email);
+};
+
   const submithandler = async () => {
+
+    if (!firstName) {
+      toast("Please enter your first name");
+      return;
+  }
+  if (!lastName) {
+      toast("Please enter your last name");
+      return;
+  }
+  if (!validateEmail(username)) {
+      toast("Please enter a valid email address");
+      return;
+  }
+  if (!password || password.length <= 6) {
+      toast("Please enter your password with minmum 6 characters");
+      return;
+  }
+    
+    console.log( username,
+      firstName,
+      lastName,
+      password);
   
-   const response = await axios.post("https://paytm-tu3l.onrender.com/api/v1/users/signup", {
+   const response = await axios.post(`${BACKEND_URL}/api/v1/users/signup`, {
       username,
       firstName,
       lastName,
@@ -46,6 +76,7 @@ const Signup = () => {
             <Button label={"Sign Up"} onClick={submithandler} /> 
           </div>
           <BottomWarning label={"Already have an account?"} buttonText={"Sign in"} to={"/signin"} />
+          <ToastContainer />
         </div>
 
       </div>

@@ -6,23 +6,41 @@ import Button from "../components/Button"
 import { useState } from 'react'
 import { useNavigate } from "react-router-dom"
 import axios from 'axios'
-export const Signin = ({}) => {
+import { BACKEND_URL } from "../config"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+export const Signin = ({ }) => {
   const navigate = useNavigate();
-    const [username, setUsername] =useState('')
-    const [password, setPassword] = useState('')
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
   
-  const submitHandler = async(e) => {
+  const submitHandler = async (e) => {
 
     e.preventDefault();
-      
-    const response = await axios.post('https://paytm-tu3l.onrender.com/api/v1/users/signin', {
-       username,
-       password
-    })
+
+    if (!validateEmail(username)) {
+      toast("Please enter a valid email address");
+      return;
+    }
+    if (!password || password.length <= 6) {
+      toast("Please enter your password with minmum 6 characters");
+      return;
+    }
     
+    try {
+      
+      const response = await axios.post(`${BACKEND_URL}/api/v1/users/signin`, {
+        username,
+        password
+      })
+     
       localStorage.setItem('token', response.data.token)
-       navigate('/dashboard') 
-     }
+      navigate('/dashboard');
+    } catch (error) {
+    toast('please enter correct details');
+  }
+      
+}
 
 
     return <div className="bg-slate-300 h-screen flex justify-center">
@@ -37,7 +55,8 @@ export const Signin = ({}) => {
         <div className="pt-4">
           <Button label={"Sign in"} onClick={(e) =>submitHandler(e)}/>
         </div>
-        <BottomWarning label={"Don't have an account?"} buttonText={"Sign up"} to={"/signup"} />
+          <BottomWarning label={"Don't have an account?"} buttonText={"Sign up"} to={"/signup"} />
+          <ToastContainer />
       </div>
     </div>
   </div>
