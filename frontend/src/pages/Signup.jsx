@@ -9,12 +9,14 @@ import BottomWarning from '../components/BottomWarning'
 import axios from 'axios'
 import { useNavigate } from "react-router-dom"
 import { BACKEND_URL } from '../config';
+import Spinner from '../components/Spinner';
 const Signup = () => {
 
   const [firstName, setFirstName] = useState('')
   const [lastName,setLastName] =useState('')
   const [password, setPassword] = useState('')
   const [username, setUsername] = useState('')
+  const [loading, setLoading] = useState(false)
   const navigate = useNavigate();
 
 
@@ -24,7 +26,8 @@ const Signup = () => {
 };
 
   const submithandler = async () => {
-
+     
+   
     if (!firstName) {
       toast("Please enter your first name");
       return;
@@ -42,20 +45,26 @@ const Signup = () => {
       return;
   }
     
-    console.log( username,
-      firstName,
-      lastName,
-      password);
+    try {
+      setLoading(true);
+      const response = await axios.post(`${BACKEND_URL}/api/v1/users/signup`, {
+        username,
+        firstName,
+        lastName,
+        password
+      })
   
-   const response = await axios.post(`${BACKEND_URL}/api/v1/users/signup`, {
-      username,
-      firstName,
-      lastName,
-      password
-    })
+      localStorage.setItem("token", response.data.token)
+      navigate("/dashboard");
+    } catch (error) {
+      toast('Please enter correct details');
+    } finally {
+      setLoading(false)
+    }
+  
+   
+  
 
-    localStorage.setItem("token", response.data.token)
-    navigate("/dashboard")
 
   }
   return (
@@ -72,8 +81,12 @@ const Signup = () => {
              onChange={e=> setUsername(e.target.value)} label={"Email"} placeholder={"murali@gmail.com"} />
           <InputBox
              onChange={e=> setPassword(e.target.value)} label={"Password"} placeholder={"1234567"} />
-          <div className='pt-4'>
-            <Button label={"Sign Up"} onClick={submithandler} /> 
+         <div className="pt-4">
+            {loading ? ( 
+              <Spinner />
+            ) : (
+              <Button label={"Sign in"} onClick={submithandler} />
+            )}
           </div>
           <BottomWarning label={"Already have an account?"} buttonText={"Sign in"} to={"/signin"} />
           <ToastContainer />
